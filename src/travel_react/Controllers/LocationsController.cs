@@ -13,9 +13,10 @@ namespace travel_react.Controllers
     public class Locations : Controller
     {
         private TravelContext db = new TravelContext();
+
         public IActionResult Index()
         {
-            return View(db.Locations.ToList());
+            return View();
         }
 
         public IActionResult Details(int id)
@@ -65,9 +66,9 @@ namespace travel_react.Controllers
             return RedirectToAction("Index");
         }
 
-        [Route("comments")]
-        [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
-        public ActionResult Comments()
+        [Route("locationdata")]
+        
+        public ActionResult LocationData()
         {
             return Json(db.Locations.ToList());
         }

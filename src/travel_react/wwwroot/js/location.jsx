@@ -1,16 +1,6 @@
 ﻿
 var data = [{"id":1,"name":"Paris","things":[]},{"id":2,"name":"London","things":[]},{"id":3,"name":"Berlin","things":[]},{"id":4,"name":"Beijing","things":[]},{"id":5,"name":"Vietnam","things":[]}];
 
-var LocationBox = React.createClass({
-    render: function() {
-        return (
-          <div className="LocationBox">
-            <h1>Locations:</h1>
-            <LocationList data={this.props.data}/>
-          </div>
-      );
-    }
-});
 
 var Location = React.createClass({
     render: function() {
@@ -23,8 +13,20 @@ var Location = React.createClass({
 });
 
 var LocationList = React.createClass({
+    getInitialState: function () {
+        return { data: [] };
+    },
+    componentWillMount: function () {
+        var xhr = new XMLHttpRequest();
+        xhr.open('get', this.props.url, true);
+        xhr.onload = function () {
+            var data = JSON.parse(xhr.responseText);
+            this.setState({ data: data });
+        }.bind(this);
+        xhr.send();
+    },
     render: function() {
-        var eachLocation = this.props.data.map(function(location) {
+        var eachLocation = this.state.data.map(function(location) {
             return (
               <Location key={location.id}>
             {location.name}
@@ -50,6 +52,6 @@ var Location = React.createClass({
 });
 
 ReactDOM.render(
-  <LocationBox data={data}/>,
-  document.getElementById('locationBox')
+  <LocationList url="/locationdata"/>,
+  document.getElementById('locationList')
 );
