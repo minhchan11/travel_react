@@ -13,19 +13,6 @@ var LocationList = React.createClass({
     getInitialState: function () {
        return { data: this.props.initialData };
     },
-    loadLocationsFromServer: function () {
-        var xhr = new XMLHttpRequest();
-        xhr.open('get', this.props.url, true);
-        xhr.onload = function () {
-            var data = JSON.parse(xhr.responseText);
-            this.setState({ data: data });
-        }.bind(this);
-        xhr.send();
-    },
-    componentDidMount: function () {
-        this.loadLocationsFromServer();
-        window.setInterval(this.loadCommentsFromServer, this.props.pollInterval);
-    },
     render: function() {
         var eachLocation = this.state.data.map(function(location) {
             return (
@@ -52,3 +39,16 @@ var Location = React.createClass({
     }
 });
 
+var LocationForm = React.createClass({
+    handleSubmit: function (e) {
+        var newName = this.state.name;
+    },
+    render: function() {
+        return (
+          <form className="LocationForm" onSubmit={this.handleSubmit}>
+            <input type="text" placeholder="new place name" value={this.state.name}/>
+            <input type="submit" value="Post" />
+          </form>
+      );
+    }
+});

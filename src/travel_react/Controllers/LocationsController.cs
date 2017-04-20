@@ -65,5 +65,14 @@ namespace travel_react.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        [Route("locations/new")]
+        [HttpPost]
+        public ActionResult AddLocation(Location location)
+        {
+            db.Locations.Add(location);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
     }
 }
