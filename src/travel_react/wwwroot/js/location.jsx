@@ -1,7 +1,4 @@
 ﻿
-var data = [{"id":1,"name":"Paris","things":[]},{"id":2,"name":"London","things":[]},{"id":3,"name":"Berlin","things":[]},{"id":4,"name":"Beijing","things":[]},{"id":5,"name":"Vietnam","things":[]}];
-
-
 var Location = React.createClass({
     render: function() {
         return (
@@ -16,7 +13,7 @@ var LocationList = React.createClass({
     getInitialState: function () {
         return { data: [] };
     },
-    componentWillMount: function () {
+    loadLocationsFromServer: function () {
         var xhr = new XMLHttpRequest();
         xhr.open('get', this.props.url, true);
         xhr.onload = function () {
@@ -24,6 +21,10 @@ var LocationList = React.createClass({
             this.setState({ data: data });
         }.bind(this);
         xhr.send();
+    },
+    componentDidMount: function () {
+        this.loadLocationsFromServer();
+        window.setInterval(this.loadCommentsFromServer, this.props.pollInterval);
     },
     render: function() {
         var eachLocation = this.state.data.map(function(location) {
@@ -52,6 +53,6 @@ var Location = React.createClass({
 });
 
 ReactDOM.render(
-  <LocationList url="/locationdata"/>,
+  <LocationList url="/locationdata" pollInterval={2000}/>,
   document.getElementById('locationList')
 );
