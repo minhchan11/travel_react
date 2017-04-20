@@ -4,9 +4,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
+@model IEnumerable<travel_react.Models.Location>
+@Html.React("LocationList", new
+{
+    initialData = Model,
+    pollInterval = 2000,
+})
 <div id="locationList"></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-dom.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/remarkable/1.7.1/remarkable.min.js"></script>
 <script src="@Url.Content("~/js/location.jsx")"></script>
+@Html.ReactInitJavaScript()

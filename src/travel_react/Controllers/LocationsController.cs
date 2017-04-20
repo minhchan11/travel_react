@@ -16,7 +16,7 @@ namespace travel_react.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View(db.Locations.ToList());
         }
 
         public IActionResult Details(int id)
@@ -64,13 +64,6 @@ namespace travel_react.Controllers
             db.Locations.Remove(thisLocation);
             db.SaveChanges();
             return RedirectToAction("Index");
-        }
-
-        [Route("locationdata")]
-        
-        public ActionResult LocationData()
-        {
-            return Json(db.Locations.ToList());
         }
     }
 }

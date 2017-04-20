@@ -11,7 +11,7 @@ var Location = React.createClass({
 
 var LocationList = React.createClass({
     getInitialState: function () {
-        return { data: [] };
+       return { data: this.props.initialData };
     },
     loadLocationsFromServer: function () {
         var xhr = new XMLHttpRequest();
@@ -52,7 +52,3 @@ var Location = React.createClass({
     }
 });
 
-ReactDOM.render(
-  <LocationList url="/locationdata" pollInterval={2000}/>,
-  document.getElementById('locationList')
-);
